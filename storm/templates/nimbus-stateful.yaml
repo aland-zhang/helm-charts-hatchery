@@ -40,7 +40,7 @@ spec:
           - name: STORM_LOG_DIR
             value: {{ .Values.common.environmentSet.storm_log_dir }}
         ports:
-        - containerPort: {{ .Values.nimbus.service.targetPort }}
+        - containerPort: {{ .Values.nimbus.service.port }}
         resources:
 {{ toYaml .Values.nimbus.resources | indent 10 }}
         volumeMounts:

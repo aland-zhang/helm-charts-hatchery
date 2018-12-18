@@ -9,8 +9,7 @@ metadata:
 spec:
   type: {{ .Values.nimbus.service.type }}
   ports:
-  - port: {{ .Values.nimbus.service.targetPort }}
-    targetPort: {{ .Values.nimbus.service.port }}
+  - port: {{ .Values.nimbus.service.port }}
     name: {{ .Values.nimbus.service.name }}
   selector:
     app: {{ template "storm.nimbus.fullname" . }}
