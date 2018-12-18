@@ -21,7 +21,7 @@ nimbus:
     pullPolicy: IfNotPresent
   service:
     name: nimbus
-    type: ClusterIP
+    type: LoadBalancer
     port: 6627
   resources:
     limits:
