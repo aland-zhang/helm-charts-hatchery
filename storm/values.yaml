@@ -22,7 +22,8 @@ nimbus:
   service:
     name: nimbus
     type: LoadBalancer
-    port: 6627
+    port: 80
+    targetPort: 6627
   resources:
     limits:
       cpu: 100m
