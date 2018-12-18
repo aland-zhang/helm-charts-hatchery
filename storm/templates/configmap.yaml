@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "storm.nimbus.fullname" . }}
+  labels:
+    chart: {{ template "storm.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  storm.yaml: |-
+    storm.zookeeper.servers:
+        - {{ template "storm.zookeeper.fullname" . }}
+    nimbus.seeds:
+        - {{ template "storm.nimbus.fullname" . }}
+    storm.local.dir:  {{ .Values.common.environmentSet.storm_data_dir }}
+    storm.log.dir: {{ .Values.common.environmentSet.storm_log_dir }}
+    storm.local.hostname: {{ template "storm.nimbus.fullname" . }}
+    storm.log4j2.conf.dir: {{ .Values.common.environmentSet.storm_log4j2_dir }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "storm.supervisor.fullname" . }}
+  labels:
+    chart: {{ template "storm.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  storm.yaml: |-
+    storm.zookeeper.servers:
+        - {{ template "storm.zookeeper.fullname" . }}
+    nimbus.seeds:
+        - {{ template "storm.nimbus.fullname" . }}
+    ### supervisor.* configs are for node supervisors
+    # Define the amount of workers that can be run on this machine. Each worker is assigned a port to use for communication
+    supervisor.slots.ports:
+      {{- range .Values.supervisor.worker.ports }}
+      - {{ . }}
+      {{- end }}
+    supervisor.childopts: {{ .Values.supervisor.worker.childopts }}
+    supervisor.run.worker.as.user: {{ .Values.supervisor.worker.asUser }}
+    supervisor.worker.timeout.secs: {{ .Values.supervisor.worker.timeout }}
+    storm.local.dir:  {{ .Values.common.environmentSet.storm_data_dir }}
+    storm.log.dir: {{ .Values.common.environmentSet.storm_log_dir }}
+    storm.local.hostname: {{ template "storm.nimbus.fullname" . }}
+    storm.log4j2.conf.dir: {{ .Values.common.environmentSet.storm_log4j2_dir }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "storm.logging.name" . }}
+  labels:
+    chart: {{ template "storm.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  {{- $files := .Files }}
+  {{- range tuple "cluster.xml" "worker.xml" }}
+  {{ . }}: |-
+{{ $files.Get . | indent 4 }}
+  {{- end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "storm.ui.fullname" . }}
+  labels:
+    chart: {{ template "storm.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  storm.yaml: |-
+    storm.zookeeper.servers:
+        - {{ template "storm.zookeeper.fullname" . }}
+    nimbus.seeds:
+        - {{ template "storm.nimbus.fullname" . }}
+    storm.local.dir:  {{ .Values.common.environmentSet.storm_data_dir }}
+    storm.log.dir: {{ .Values.common.environmentSet.storm_log_dir }}
+    storm.local.hostname: {{ template "storm.ui.fullname" . }}
+    storm.log4j2.conf.dir: {{ .Values.common.environmentSet.storm_log4j2_dir }}

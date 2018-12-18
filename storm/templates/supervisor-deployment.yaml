@@ -1,0 +1,72 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: {{ template "storm.supervisor.fullname" . }}
+  labels:
+    app: {{ template "storm.supervisor.fullname" . }}
+    chart: {{ template "storm.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.supervisor.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "storm.supervisor.fullname" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "storm.supervisor.fullname" . }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+      - name: init-{{ template "storm.zookeeper.fullname" . }}
+        image: busybox
+        command: ["sh", "-c", "until nslookup {{ template "storm.zookeeper.fullname" . }}; do echo waiting for {{ template "storm.zookeeper.fullname" . }}; sleep 2; done;"]
+      - name: init-{{ template "storm.nimbus.fullname" . }}
+        image: busybox
+        command: ["sh", "-c", "until nslookup {{ template "storm.nimbus.fullname" . }}; do echo waiting for {{ template "storm.nimbus.fullname" . }}; sleep 2; done;"]
+      containers:
+      - name: {{ .Values.supervisor.service.name }}
+        image: "{{ .Values.supervisor.image.repository }}:{{ .Values.supervisor.image.tag }}"
+        imagePullPolicy: {{ .Values.supervisor.image.pullPolicy }}
+        command: ["storm", "supervisor"]
+        env:
+          - name: STORM_USER
+            value: {{ .Values.common.environmentSet.storm_user }}
+          - name: STORM_CONF_DIR
+            value: {{ .Values.common.environmentSet.storm_conf_dir }}
+          - name: STORM_DATA_DIR
+            value: {{ .Values.common.environmentSet.storm_data_dir }}
+          - name: STORM_LOG_DIR
+            value: {{ .Values.common.environmentSet.storm_log_dir }}
+        ports:
+        - containerPort: {{ .Values.supervisor.service.port }}
+        resources:
+{{ toYaml .Values.supervisor.resources | indent 10 }}
+        volumeMounts:
+        - name: storm-data
+          mountPath: {{ .Values.common.environmentSet.storm_vol | quote }}
+        - name: storm-configmap
+          mountPath: {{ .Values.common.environmentSet.storm_conf_dir | quote }}
+        - name: storm-logmap
+          mountPath: {{ .Values.common.environmentSet.storm_log_dir | quote }}
+        - name: storm-datamap
+          mountPath: {{ .Values.common.environmentSet.storm_data_dir | quote }}
+      volumes:
+      - name: storm-configmap
+        configMap:
+          name: {{ template "storm.supervisor.fullname" . }}
+      - name: storm-logmap
+        emptyDir: {}
+      - name: storm-datamap
+        emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: storm-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ .Values.common.storageClassName | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.supervisor.persistence.size | quote }}

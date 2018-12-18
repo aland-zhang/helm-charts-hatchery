@@ -1,0 +1,89 @@
+# Default values for storm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+name: storm
+common:
+  storageClassName: gp2
+  environmentSet:
+    storm_user: storm
+    storm_vol: /storm-data
+    storm_conf_dir: /storm-data/conf
+    storm_data_dir: /storm-data/data
+    storm_log_dir: /storm-data/logs
+    storm_log4j2_dir: /storm-data/logs4j2
+
+nimbus:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: storm
+    tag: 1.2.2
+    pullPolicy: IfNotPresent
+  service:
+    name: nimbus
+    type: ClusterIP
+    port: 6627
+  resources:
+    limits:
+      cpu: 100m
+  persistence:
+    enabled: true
+    size: 10Gi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+supervisor:
+  replicaCount: 3
+  image:
+    repository: storm
+    tag: 1.2.2
+    pullPolicy: IfNotPresent
+  service:
+    name: supervisor
+    type: ClusterIP
+    port: 6700
+  resources:
+    limits:
+      cpu: 200m
+  persistence:
+    enabled: true
+    size: 10Gi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  worker:
+    ports:
+     - 6701
+     - 6702
+     - 6703
+    childopts: "-Xmx256m"
+    asUser: false
+    timeout: 60 ## Seconds
+
+ui:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: storm
+    tag: 1.2.2
+    pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    name: ui
+    port: 8080
+  resources:
+    limits:
+      cpu: 100m
+  ingress:
+    enabled: false
+    annotations: {}
+    tls: []
+  persistence:
+    enabled: true
+    size: 10Gi
+
+zookeeper:
+  enabled: true
+  service:
+    name: zookeeper
