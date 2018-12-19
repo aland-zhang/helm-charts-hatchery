@@ -31,7 +31,7 @@ service:
     ## AWS example for use with LoadBalancer service type.
     # external-dns.alpha.kubernetes.io/hostname: zookeeper.cluster.local
     # service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    # service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
   ports:
     client:
       port: 2181  # Service port number for client port.
