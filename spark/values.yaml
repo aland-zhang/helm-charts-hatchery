@@ -73,7 +73,7 @@ Zeppelin:
   #   - example.local
   Persistence:
     Config:
-      Enabled: true
+      Enabled: false 
       ## etcd data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -86,7 +86,7 @@ Zeppelin:
       ## Set default PVC access mode: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
       AccessMode: ReadWriteMany
     Notebook:
-      Enabled: true
+      Enabled: false
       StorageClass: "nfs-client"
       Size: 10G
       AccessMode: ReadWriteMany
