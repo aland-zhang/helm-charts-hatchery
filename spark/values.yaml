@@ -39,7 +39,7 @@ Worker:
   # Set how much total memory workers have to give executors
   # ExecutorMemory: 1g
   Autoscaling:
-    Enabled: true
+    Enabled: false
   ReplicasMax: 10
   CpuTargetPercentage: 50
 
@@ -73,7 +73,7 @@ Zeppelin:
   #   - example.local
   Persistence:
     Config:
-      Enabled: false 
+      Enabled: true
       ## etcd data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -82,11 +82,11 @@ Zeppelin:
       ## GKE, AWS & OpenStack)
       StorageClass: "nfs-client"
       ## Set default PVC size
-      Size: 10G
+      Size: 30G
       ## Set default PVC access mode: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
-      AccessMode: ReadWriteMany
+      AccessMode: ReadWriteOnce
     Notebook:
       Enabled: false
       StorageClass: "nfs-client"
-      Size: 10G
-      AccessMode: ReadWriteMany
+      Size: 30G
+      AccessMode: ReadWriteOnce
