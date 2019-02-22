@@ -14,8 +14,8 @@ Master:
   Component: "spark-master"
   Cpu: "100m"
   Memory: "512Mi"
-  ServicePort: 7077
-  ContainerPort: 7077
+  ServicePort: 6066
+  ContainerPort: 6066
   # Set Master JVM memory. Default 1g
   # DaemonMemory: 1g
   ServiceType: LoadBalancer
