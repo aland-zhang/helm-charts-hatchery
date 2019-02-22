@@ -11,6 +11,8 @@ spec:
   ports:
     - port: {{ .Values.Master.ServicePort }}
       targetPort: {{ .Values.Master.ContainerPort }}
+    - port: {{ .Values.Master.APIServicePort }}
+      targetPort: {{ .Values.Master.APIContainerPort }}
   selector:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
   type: {{ .Values.Master.ServiceType }}
