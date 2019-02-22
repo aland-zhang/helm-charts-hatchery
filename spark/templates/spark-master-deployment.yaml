@@ -10,8 +10,10 @@ metadata:
 spec:
   ports:
     - port: {{ .Values.Master.ServicePort }}
+      name: servicePort
       targetPort: {{ .Values.Master.ContainerPort }}
     - port: {{ .Values.Master.APIServicePort }}
+      name: apiPort
       targetPort: {{ .Values.Master.APIContainerPort }}
   selector:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
