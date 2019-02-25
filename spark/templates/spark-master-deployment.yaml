@@ -34,7 +34,7 @@ spec:
       targetPort: {{ .Values.WebUi.ContainerPort }}
   selector:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
-  type: {{ .Values.Master.ui.ServiceType }}
+  type: {{ .Values.Master.ServiceType }}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
