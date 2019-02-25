@@ -20,7 +20,9 @@ Master:
   ContainerPort: 7077
   # Set Master JVM memory. Default 1g
   # DaemonMemory: 1g
-  ServiceType: LoadBalancer
+  ServiceType: NodePort
+  ui:
+    ServiceType: LoadBalancer
 
 WebUi:
   Name: webui
