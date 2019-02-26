@@ -10,13 +10,15 @@ metadata:
 spec:
   ports:
     - port: {{ .Values.Master.ServicePort }}
-      #      name: service-port
+      name: service-port
       targetPort: {{ .Values.Master.ContainerPort }}
-      #   - port: {{ .Values.Master.APIServicePort }}
-      #     name: api-port
-      #     targetPort: {{ .Values.Master.APIContainerPort }}
+    - port: {{ .Values.Master.APIServicePort }}
+      name: api-port
+      targetPort: {{ .Values.Master.APIContainerPort }}
   selector:
     component: "{{ .Release.Name }}-{{ .Values.Master.Component }}"
+  type: {{ .Values.Master.ServiceType }}
+
 ---
 apiVersion: v1
 kind: Service
