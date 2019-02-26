@@ -8,8 +8,8 @@ Spark:
 
 Master:
   Name: master
-  Image: "aghorbani/spark"
-  ImageTag: "2.1.0"
+  Image: "kodelint/spark"
+  ImageTag: "sp-2.4-0.1"
   Replicas: 1
   Component: "spark-master"
   Cpu: "100m"
@@ -29,8 +29,8 @@ WebUi:
 
 Worker:
   Name: worker
-  Image: "aghorbani/spark"
-  ImageTag: "2.1.0"
+  Image: "kodelint/spark"
+  ImageTag: "sp-2.4-0.1"
   Replicas: 3
   Component: "spark-worker"
   Cpu: "100m"
