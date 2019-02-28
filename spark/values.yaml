@@ -41,7 +41,7 @@ Worker:
   # Set how much total memory workers have to give executors
   # ExecutorMemory: 1g
   Autoscaling:
-    Enabled: false
+    Enabled: true
   ReplicasMax: 10
   CpuTargetPercentage: 50
 
