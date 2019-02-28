@@ -179,7 +179,7 @@ persistentVolumeClaim:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "nfs-client"
+  # storageClass: "nfs-client"
 
 # default security context
 securityContext:

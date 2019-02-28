@@ -124,7 +124,7 @@ master:
     accessMode: ReadWriteOnce
     name: data
     size: "40Gi"
-    storageClass: "nfs-client"
+    #storageClass: "-"
   readinessProbe:
     httpGet:
       path: /_cluster/health?local=true
