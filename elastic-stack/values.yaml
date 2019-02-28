@@ -7,7 +7,7 @@ elasticsearch:
 kibana:
   enabled: true
   env:
-    ELASTICSEARCH_URL: http://elk.dev.k8s.adobesearch.io:9200
+    ELASTICSEARCH_URL: http://http.default.svc.cluster.local:9200
 
 logstash:
   enabled: true
