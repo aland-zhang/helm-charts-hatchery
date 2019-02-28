@@ -125,7 +125,7 @@ resources: {}
 
 ## Persist data to a persistent volume
 persistence:
-  enabled: false
+  enabled: true
 
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -133,7 +133,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: "nfs-client"
   # annotations: {}
   accessMode: ReadWriteOnce
   size: 10Gi
