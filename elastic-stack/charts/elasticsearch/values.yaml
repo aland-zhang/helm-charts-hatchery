@@ -66,12 +66,12 @@ cluster:
 client:
   name: client
   replicas: 2
-  serviceType: ClusterIP
+  serviceType: Loadbalancer
   loadBalancerIP: {}
   loadBalancerSourceRanges: {}
 ## (dict) If specified, apply these annotations to the client service
-#  serviceAnnotations:
-#    example: client-svc-foo
+  serviceAnnotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
   heapSize: "512m"
   # additionalJavaOpts: "-XX:MaxRAM=512m"
   antiAffinity: "soft"
