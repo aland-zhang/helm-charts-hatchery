@@ -1,0 +1,35 @@
+operatorImageName: kodelint/sparky-with-s3-support
+operatorVersion: v0.3
+imagePullPolicy: IfNotPresent
+
+rbac:
+  create: true
+
+serviceAccounts:
+  spark:
+    create: true
+    name:
+  sparkoperator:
+    create: true
+    name:
+
+sparkJobNamespace: ""
+
+enableWebhook: false
+enableMetrics: true
+
+controllerThreads: 10
+ingressUrlFormat: ""
+installCrds: true
+metricsPort: 10254
+metricsEndpoint: "/metrics"
+metricsPrefix: ""
+resyncInterval: 30
+webhookPort: 8080
+
+## Node labels for pod assignment
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+
+logLevel: 2
