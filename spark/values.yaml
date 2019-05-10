@@ -8,8 +8,8 @@ Spark:
 
 Master:
   Name: master
-  Image: "kodelint/spark-for-helm"
-  ImageTag: "v0.1"
+  Image: "mcr.microsoft.com/mmlspark/spark2.4"
+  ImageTag: "v4"
   Replicas: 1
   Component: "spark-master"
   Cpu: "100m"
@@ -33,9 +33,9 @@ WebUi:
 
 Worker:
   Name: worker
-  Image: "kodelint/spark-for-helm"
-  ImageTag: "v0.1"
-  Replicas: 3
+  Image: "mcr.microsoft.com/mmlspark/spark2.4"
+  ImageTag: "v4"
+  Replicas: 2
   Component: "spark-worker"
   Cpu: "100m"
   Memory: "2048Mi"
@@ -45,15 +45,15 @@ Worker:
   # Set how much total memory workers have to give executors
   # ExecutorMemory: 1g
   Autoscaling:
-    Enabled: true
-  ReplicasMax: 20
+    Enabled: false
+  ReplicasMax: 10
   CpuTargetPercentage: 50
 
 
 Zeppelin:
   Name: zeppelin
-  Image: "kodelint/zepplin-for-helm"
-  ImageTag: "v0.1"
+  Image: "mcr.microsoft.com/mmlspark/zeppelin"
+  ImageTag: "v4"
   Replicas: 1
   Component: "zeppelin"
   Cpu: "100m"
@@ -82,37 +82,20 @@ Zeppelin:
   #   - example.local
   Persistence:
     Config:
-      Enabled: true
+      Enabled: false
       ## etcd data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
       ## If undefined (the default) or set to null, no storageClassName spec is
       ## set, choosing the default provisioner. (gp2 on AWS, standard on
       ## GKE, AWS & OpenStack)
-      # StorageClass: "-"
+      StorageClass: "-"
       ## Set default PVC size
       Size: 10G
       ## Set default PVC access mode: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
       AccessMode: ReadWriteOnce
     Notebook:
-      Enabled: true
-      # StorageClass: "-"
+      Enabled: false
+      StorageClass: "-"
       Size: 10G
       AccessMode: ReadWriteOnce
-
-Livy:
-  Enabled: true
-  Name: livy
-  Image: "mcr.microsoft.com/mmlspark/livy"
-  ImageTag: "v4"
-  Replicas: 1
-  Component: "livy"
-  Cpu: "100m"
-  Memory: "1024Mi"
-  ServicePort: 8998
-  ContainerPort: 8998
-  ServiceType: LoadBalancer
-  Autoscaling:
-    Enabled: false
-  ReplicasMax: 3
-  CpuTargetPercentage: 50
