@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "airflow.fullname" . }}-web
+  name: {{ template "airflow.fullname" . }}-airflow-web
   labels:
-    app: {{ template "airflow.name" . }}-web
+    app: {{ template "airflow.name" . }}-airflow-web
     chart: {{ template "airflow.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  type: {{ .Values.airflow.type }}
+  type: {{ .Values.airflow.service.type }}
   selector:
-    app: {{ template "airflow.name" . }}-web
+    app: {{ template "airflow.name" . }}-airflow-web
     release: {{ .Release.Name }}
   ports:
     - name: web
@@ -20,16 +20,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "airflow.fullname" . }}-flower
+  name: {{ template "airflow.fullname" . }}-airflow-flower
   labels:
-    app: {{ template "airflow.name" . }}-flower
+    app: {{ template "airflow.name" . }}-airflow-flower
     chart: {{ template "airflow.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  type: {{ .Values.airflow.type }}
+  type: {{ .Values.airflow.service.type }}
   selector:
-    app: {{ template "airflow.name" . }}-flower
+    app: {{ template "airflow.name" . }}-airflow-flower
     release: {{ .Release.Name }}
   ports:
     - name: flower
@@ -40,9 +40,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "airflow.fullname" . }}-worker
+  name: {{ template "airflow.fullname" . }}-airflow-worker
   labels:
-    app: {{ template "airflow.name" . }}-worker
+    app: {{ template "airflow.name" . }}-airflow-worker
     chart: {{ template "airflow.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -53,4 +53,4 @@ spec:
       port: 8793
   clusterIP: None
   selector:
-    app: {{ template "airflow.name" . }}-worker
+    app: {{ template "airflow.name" . }}-airflow-worker

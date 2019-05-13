@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "airflow.fullname" . }}-scheduler
+  name: {{ template "airflow.fullname" . }}-airflow-scheduler
   labels:
-    app: {{ template "airflow.name" . }}-scheduler
+    app: {{ template "airflow.name" . }}-airflow-scheduler
     chart: {{ template "airflow.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "airflow.name" . }}-scheduler
+        app: {{ template "airflow.name" . }}-airflow-scheduler
         release: {{ .Release.Name }}
     spec:
       restartPolicy: Always
