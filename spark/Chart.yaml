@@ -1,5 +1,5 @@
 name: spark
-version: 1.0.0
+version: 1.0.1
 appVersion: 2.4.0
 description: Fast and general-purpose cluster computing system.
 home: http://spark.apache.org
@@ -11,3 +11,7 @@ sources:
 maintainers:
   - name: Satyajit Roy
     email: kodelint@gmail.com
+Provides:
+  - Spark
+  - Zepplin
+  - Airflow  
