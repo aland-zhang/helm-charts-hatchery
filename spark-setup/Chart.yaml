@@ -1,0 +1,13 @@
+name: spark
+version: 2.0.0
+appVersion: 2.4.0
+description: Fast and general-purpose cluster computing system.
+home: http://spark.apache.org
+icon: http://spark.apache.org/images/spark-logo-trademark.png
+sources:
+  - https://github.com/kubernetes/kubernetes/tree/master/examples/spark
+  - https://github.com/apache/spark
+  - https://github.com/Azure/mmlspark/tree/master/tools/helm/docker_images
+maintainers:
+  - name: Satyajit Roy
+    email: kodelint@gmail.com
